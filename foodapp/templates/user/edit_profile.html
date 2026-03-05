@@ -1,0 +1,69 @@
+{% extends "user/user_index.html" %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg" style="border-radius: 10px;">
+                <div class="card-body">
+                    <h3 class="card-title text-center mb-4">Edit Profile</h3>
+
+                    <form method="post" novalidate>
+                        {% csrf_token %}
+
+                        <div class="mb-3">
+                            <label class="form-label">Email (read-only)</label>
+                            <input type="email" class="form-control" value="{{ user.email }}" readonly>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Name</label>
+                            <input type="text"
+                                   name="name"
+                                   class="form-control {% if errors.name %}is-invalid{% endif %}"
+                                   maxlength="15"
+                                   value="{{ form_data.name }}">
+                            {% if errors.name %}
+                            <div class="invalid-feedback">
+                                {{ errors.name }}
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Phone</label>
+                            <input type="text"
+                                   name="phone"
+                                   class="form-control {% if errors.phone %}is-invalid{% endif %}"
+                                   maxlength="15"
+                                   value="{{ form_data.phone }}">
+                            {% if errors.phone %}
+                            <div class="invalid-feedback">
+                                {{ errors.phone }}
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Address</label>
+                            <textarea name="address"
+                                      class="form-control {% if errors.address %}is-invalid{% endif %}"
+                                      rows="3">{{ form_data.address }}</textarea>
+                            {% if errors.address %}
+                            <div class="invalid-feedback">
+                                {{ errors.address }}
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <a href="{% url 'user_profile' %}" class="btn btn-secondary">Cancel</a>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

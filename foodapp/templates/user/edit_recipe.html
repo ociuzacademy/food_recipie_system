@@ -1,0 +1,106 @@
+{% extends "user/user_index.html" %}
+{% block content %}
+
+<div class="container mt-5">
+    <div class="card shadow-lg p-4">
+        <h3 class="text-center mb-4">Edit Recipe</h3>
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label>Category</label>
+                <select name="category" class="form-control">
+                    {% for category in categories %}
+                        <option value="{{ category.id }}"
+                        {% if recipe.category.id == category.id %}selected{% endif %}>
+                            {{ category.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label>Title</label>
+                <input type="text" name="title"
+                       class="form-control"
+                       value="{{ recipe.title }}" required>
+            </div>
+
+            <div class="mb-3">
+                <label>Description</label>
+                <textarea name="description"
+                          class="form-control"
+                          rows="3" required>{{ recipe.description }}</textarea>
+            </div>
+
+            <div class="mb-3">
+                <label>Ingredients</label>
+                <textarea name="ingredients"
+                          class="form-control"
+                          rows="4" required>{{ recipe.ingredients }}</textarea>
+            </div>
+
+            <div class="mb-3">
+                <label>Instructions</label>
+                <textarea name="instructions"
+                          class="form-control"
+                          rows="4" required>{{ recipe.instructions }}</textarea>
+            </div>
+
+            <!-- Current Image -->
+            {% if recipe.image %}
+            <div class="mb-3">
+                <label>Current Image</label>
+                <img src="{{ recipe.image.url }}"
+                     class="img-fluid rounded"
+                     style="max-height:200px;">
+            </div>
+            {% endif %}
+
+            <div class="mb-3">
+                <label>Change Main Image</label>
+                <input type="file" name="image" class="form-control">
+            </div>
+
+            <!-- Gallery Images -->
+            {% if recipe.images.all %}
+            <div class="mb-3">
+                <label>Existing Gallery Images</label><br>
+                {% for img in recipe.images.all %}
+                    <img src="{{ img.image.url }}"
+                         width="80"
+                         class="rounded m-1">
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <div class="mb-3">
+                <label>Add More Gallery Images</label>
+                <input type="file" name="multiple_images"
+                       class="form-control" multiple>
+            </div>
+
+            <!-- Current Video -->
+            {% if recipe.video %}
+            <div class="mb-3">
+                <label>Current Video</label>
+                <video width="100%" height="200" controls>
+                    <source src="{{ recipe.video.url }}">
+                </video>
+            </div>
+            {% endif %}
+
+            <div class="mb-3">
+                <label>Change Video</label>
+                <input type="file" name="video" class="form-control">
+            </div>
+
+            <button type="submit" class="btn btn-success w-100">
+                Save Changes
+            </button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

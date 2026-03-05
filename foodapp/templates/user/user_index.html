@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>RecipeHub - User Dashboard</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <!-- Favicon -->
+    <link href="/static/img/favicon.ico" rel="icon">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- CSS -->
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/style.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+<div class="container-fluid px-0 d-none d-lg-block">
+    <div class="row gx-0">
+        <div class="col-lg-4 bg-secondary py-3"></div>
+
+        <div class="col-lg-4 text-center bg-primary border-inner py-3">
+            <a href="{% url 'user_index' %}" class="navbar-brand">
+                <h1 class="m-0 text-uppercase text-white">
+                    <i class="fas fa-utensils text-dark me-3"></i>RecipeHub
+                </h1>
+            </a>
+        </div>
+
+        <div class="col-lg-4 bg-secondary py-3"></div>
+    </div>
+</div>
+
+<!-- ================= NAVBAR ================= -->
+<nav class="navbar navbar-expand-lg bg-dark navbar-dark shadow-sm py-3">
+    <div class="container">
+        <a href="{% url 'user_index' %}" class="navbar-brand d-lg-none">
+            RecipeHub
+        </a>
+
+        <button class="navbar-toggler" type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto">
+                <a href="{% url 'user_index' %}" class="nav-item nav-link active">Home</a>
+                <a href="{% url 'user_view_about' %}" class="nav-item nav-link">About</a>
+                <a href="{% url 'feedback' %}" class="nav-item nav-link">Feedback</a>
+                <a href="{% url 'logout' %}" class="nav-item nav-link text-danger">Logout</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- ================= MESSAGES (FIXED) ================= -->
+{% if messages %}
+    <div class="container mt-3">
+        {% for message in messages %}
+            <!-- <div class="alert alert-{{ message.tags }} alert-dismissible fade show"> -->
+                <!-- {{ message }} -->
+                <!-- <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert">
+                </button> -->
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+{% block content %}
+
+<!-- ================= DASHBOARD ================= -->
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <h4 class="text-primary">Welcome to Your Dashboard</h4>
+        <h1 class="display-5">Explore & Manage Your Recipes</h1>
+    </div>
+
+    <div class="row g-4">
+
+        <!-- Search Recipes -->
+        <div class="col-md-6">
+            <div class="card shadow-lg text-center p-4 h-100">
+                <i class="bi bi-search display-4 text-primary mb-3"></i>
+                <h5>Search Recipes</h5>
+                <p>Find recipes by name or category.</p>
+                <a href="{% url 'search_recipes' %}" class="btn btn-primary mt-auto">Search Now</a>
+            </div>
+        </div>
+
+        <!-- Upload Recipe -->
+        <div class="col-md-6">
+            <div class="card shadow-lg text-center p-4 h-100">
+                <i class="bi bi-upload display-4 text-success mb-3"></i>
+                <h5>Upload Recipe</h5>
+                <p>Share your favorite dishes with everyone.</p>
+                <a href="{% url 'upload_recipe' %}" class="btn btn-success mt-auto">Upload</a>
+            </div>
+        </div>
+
+        <!-- View Recipes -->
+        <div class="col-md-6">
+            <div class="card shadow-lg text-center p-4 h-100">
+                <i class="bi bi-journal-richtext display-4 text-warning mb-3"></i>
+                <h5>Your Recipes</h5>
+                <p>View and manage your uploaded recipes.</p>
+                <a href="{% url 'view_recipes' %}" class="btn btn-warning mt-auto">View Recipes</a>
+            </div>
+        </div>
+
+        <!-- Profile -->
+        <div class="col-md-6">
+            <div class="card shadow-lg text-center p-4 h-100">
+                <i class="bi bi-person-circle display-4 text-info mb-3"></i>
+                <h5>Your Profile</h5>
+                <p>Check and update your personal details.</p>
+                <a href="{% url 'user_profile' %}" class="btn btn-info mt-auto">View Profile</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}
+
+<!-- ================= FOOTER ================= -->
+<div class="container-fluid bg-dark text-light py-4 mt-5">
+    <div class="container text-center">
+        <h5>RecipeHub</h5>
+        <p class="mb-0">
+            Discover, share, and enjoy amazing recipes from around the world.
+        </p>
+        <small>© 2026 RecipeHub. All Rights Reserved.</small>
+    </div>
+</div>
+
+<!-- ================= JS ================= -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

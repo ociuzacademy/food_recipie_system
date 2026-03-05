@@ -1,0 +1,105 @@
+{% extends 'index.html' %}
+{% block content %}
+<style>
+    #togglePassword:hover,
+#togglePassword:focus {
+    background-color: transparent !important;
+    box-shadow: none !important;
+    border-color: #ced4da !important;
+}
+</style>
+<div class="container-fluid bg-light pt-5">
+    <div class="container py-5">
+        <div class="d-flex flex-column text-center mb-5">
+            <h4 class="text-primary mb-3">Join Us</h4>
+            <h1 class="display-4 m-0"><span class="text-primary">Register</span> Your Account</h1>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                {% if messages %}
+                <div class="alert alert-info">
+                    {% for message in messages %}
+                    {{ message }}
+                    {% endfor %}
+                </div>
+                {% endif %}
+                <div class="card shadow-lg border-0 rounded">
+                    <div class="card-body p-4">
+                        <form method="post" novalidate>
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label class="form-label">Full Name</label>
+                                <input type="text" name="name" class="form-control {% if errors.name %}is-invalid{% endif %}" maxlength="15" value="{{ form_data.name|default:'' }}" required>
+                                {% if errors.name %}<div class="invalid-feedback">{{ errors.name }}</div>{% endif %}
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Email</label>
+                                <input type="email" name="email" class="form-control {% if errors.email %}is-invalid{% endif %}" value="{{ form_data.email|default:'' }}" required>
+                                {% if errors.email %}<div class="invalid-feedback">{{ errors.email }}</div>{% endif %}
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Phone</label>
+                                <input type="text" name="phone" class="form-control {% if errors.phone %}is-invalid{% endif %}" maxlength="15" value="{{ form_data.phone|default:'' }}" required>
+                                {% if errors.phone %}<div class="invalid-feedback">{{ errors.phone }}</div>{% endif %}
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Password</label>
+                                <div class="input-group">
+                                    <input type="password"
+                                           name="password"
+                                           id="id_password"
+                                           class="form-control {% if errors.password %}is-invalid{% endif %}"
+                                           minlength="8"
+                                           maxlength="100"
+                                           required>
+                            
+                                           <button type="button"
+                                           class="btn border-0 bg-transparent"
+                                           id="togglePassword"
+                                           title="Show Password">
+                                       <i class="bi bi-eye" id="toggleIcon"></i>
+                                   </button>
+                                </div>
+                            
+                                {% if errors.password %}
+                                    <div class="invalid-feedback d-block">{{ errors.password }}</div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Address</label>
+                                <textarea name="address" class="form-control {% if errors.address %}is-invalid{% endif %}" required>{{ form_data.address|default:'' }}</textarea>
+                                {% if errors.address %}<div class="invalid-feedback">{{ errors.address }}</div>{% endif %}
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Register</button>
+                        </form>
+                        <p class="text-center mt-3">Already have an account? <a href="{% url 'login' %}" class="text-primary">Login here</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const toggleBtn = document.getElementById("togglePassword");
+        const passwordInput = document.getElementById("id_password");
+        const icon = document.getElementById("toggleIcon");
+    
+        toggleBtn.addEventListener("click", function () {
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                icon.classList.remove("bi-eye");
+                icon.classList.add("bi-eye-slash");
+                toggleBtn.setAttribute("title", "Hide Password");
+            } else {
+                passwordInput.type = "password";
+                icon.classList.remove("bi-eye-slash");
+                icon.classList.add("bi-eye");
+                toggleBtn.setAttribute("title", "Show Password");
+            }
+        });
+    });
+    </script>
+    
+{% endblock %}

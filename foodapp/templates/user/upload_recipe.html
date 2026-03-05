@@ -1,0 +1,61 @@
+{% extends "user/user_index.html" %}
+{% block content %}
+
+<div class="container mt-5">
+    <div class="card shadow-lg p-4">
+        <h3 class="text-center mb-4">Upload Recipe</h3>
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label>Category</label>
+                <select name="category" class="form-control" required>
+                    <option value="">Select Category</option>
+                    {% for category in categories %}
+                        <option value="{{ category.id }}">{{ category.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label>Title</label>
+                <input type="text" name="title" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label>Description</label>
+                <textarea name="description" class="form-control" rows="3" required></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label>Ingredients (one per line)</label>
+                <textarea name="ingredients" class="form-control" rows="4" required></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label>Instructions (one per line)</label>
+                <textarea name="instructions" class="form-control" rows="4" required></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label>Main Image</label>
+                <input type="file" name="image" class="form-control">
+            </div>
+
+            <div class="mb-3">
+                <label>Gallery Images</label>
+                <input type="file" name="multiple_images" class="form-control" multiple>
+            </div>
+
+            <div class="mb-3">
+                <label>Video</label>
+                <input type="file" name="video" class="form-control">
+            </div>
+
+            <button type="submit" class="btn btn-success w-100">Upload Recipe</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

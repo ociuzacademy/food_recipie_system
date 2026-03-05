@@ -1,0 +1,59 @@
+{% extends 'admin/admin_index.html' %}
+{% block content %}
+<h2>Edit Recipe</h2>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="hidden" name="recipe_id" value="{{ recipe.id }}">
+
+    <label>Name:</label>
+    <input type="text" name="name" value="{{ recipe.name }}" required class="form-control">
+
+    <label>Description:</label>
+    <textarea name="description" required class="form-control">{{ recipe.description }}</textarea>
+
+    <label>Ingredients:</label>
+    <textarea name="ingredients" required class="form-control">{{ recipe.ingredients }}</textarea>
+
+    <label>Instructions:</label>
+    <textarea name="instructions" required class="form-control">{{ recipe.instructions }}</textarea>
+
+    <label>Category:</label>
+    <select name="category" class="form-control">
+        {% for category in categories %}
+            <option value="{{ category.id }}" {% if recipe.category.id == category.id %}selected{% endif %}>
+                {{ category.name }}
+            </option>
+        {% endfor %}
+    </select>
+
+    <label>Image:</label>
+    <input type="file" name="image" class="form-control">
+    {% if recipe.image %}
+        <p>Current Image:</p>
+        <img src="{{ recipe.image.url }}" width="100">
+    {% endif %}
+    <label>Upload New Video:</label>
+<input type="file" name="video" class="form-control">
+
+{% if recipe.video %}
+    <p>Current Video:</p>
+    <video width="200" controls>
+        <source src="{{ recipe.video.url }}">
+    </video>
+{% endif %}
+
+<label class="mt-2">Add More Images:</label>
+<input type="file" name="multiple_images" class="form-control" multiple>
+
+{% if recipe.images.all %}
+    <p>Existing Images:</p>
+    {% for img in recipe.images.all %}
+        <img src="{{ img.image.url }}" width="80" class="rounded m-1">
+    {% endfor %}
+{% endif %}
+
+    <br>
+    <button type="submit" class="btn btn-success">Update Recipe</button>
+</form>
+{% endblock %}
