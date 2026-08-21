@@ -1,0 +1,111 @@
+{% extends "user/user_index.html" %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg" style="border-radius: 10px;">
+                <div class="card-body">
+                    <h3 class="card-title text-center">Submit Your Feedback</h3>
+                    
+                    {% if error %}
+                        <div class="alert alert-danger">{{ error }}</div>
+                    {% endif %}
+                    
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea class="form-control" id="description" name="description" rows="5" required></textarea>
+                        </div>
+
+                        <!-- Star Rating Section -->
+                        <div class="mb-3">
+                            <label class="form-label">Rating (1 to 5)</label>
+                            <div id="star-rating">
+                                <i class="fa fa-star" data-value="1"></i>
+                                <i class="fa fa-star" data-value="2"></i>
+                                <i class="fa fa-star" data-value="3"></i>
+                                <i class="fa fa-star" data-value="4"></i>
+                                <i class="fa fa-star" data-value="5"></i>
+                            </div>
+                            <input type="hidden" id="rating" name="rating" value="0">
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Submit Feedback</button>
+                        <a href="{% url 'user_index' %}" class="btn btn-secondary">Cancel</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<hr class="mt-5">
+
+<h4 class="text-center mb-4">All User Feedback</h4>
+
+{% for fb in feedbacks %}
+    <div class="card mb-3 shadow-sm">
+        <div class="card-body">
+            <h6 class="mb-1">
+                {{ fb.user.username }}
+                <small class="text-muted float-end">
+                    {{ fb.created_at|date:"M d, Y H:i" }}
+                </small>
+            </h6>
+
+            <!-- Show Stars -->
+            <div>
+                {% for i in "12345" %}
+                    {% if forloop.counter <= fb.rating %}
+                        <i class="fa fa-star text-warning"></i>
+                    {% else %}
+                        <i class="fa fa-star text-secondary"></i>
+                    {% endif %}
+                {% endfor %}
+            </div>
+
+            <p class="mt-2">{{ fb.description }}</p>
+        </div>
+    </div>
+{% empty %}
+    <p class="text-center text-muted">No feedback submitted yet.</p>
+{% endfor %}
+
+
+<!-- FontAwesome Icons and Script for Rating -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+<script>
+    const stars = document.querySelectorAll('#star-rating .fa-star');
+    const ratingInput = document.getElementById('rating');
+
+    stars.forEach(star => {
+        star.addEventListener('click', function() {
+            const value = this.getAttribute('data-value');
+            ratingInput.value = value;
+            
+            // Reset all stars
+            stars.forEach(s => s.classList.remove('checked'));
+
+            // Highlight selected stars
+            for (let i = 0; i < value; i++) {
+                stars[i].classList.add('checked');
+            }
+        });
+    });
+</script>
+
+<style>
+    .fa-star {
+        font-size: 32px;
+        color: #ccc;
+        cursor: pointer;
+        transition: color 0.3s;
+    }
+    .fa-star.checked {
+        color: #FFD700; /* Golden Color */
+    }
+    #star-rating {
+        margin-top: 10px;
+    }
+</style>
+{% endblock %}

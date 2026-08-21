@@ -1,0 +1,36 @@
+{% extends "user/user_index.html" %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg" style="border-radius: 10px;">
+                <div class="card-body text-center">
+                    <h3 class="card-title">User Profile</h3>
+                    
+                    <table class="table">
+                        <tr>
+                            <th style="width: 40%;">Name:</th>
+                            <td>{{ user.name }}</td>
+                        </tr>
+                        <tr>
+                            <th>Email:</th>
+                            <td>{{ user.email }}</td>
+                        </tr>
+                        <tr>
+                            <th>Phone:</th>
+                            <td>{{ user.phone }}</td>
+                        </tr>
+                        <tr>
+                            <th>Address:</th>
+                            <td>{{ user.address }}</td>
+                        </tr>
+                    </table>
+
+                    <a href="{% url 'edit_profile' %}" class="btn btn-primary mt-3">Edit Profile</a>
+                    <a href="{% url 'user_index' %}" class="btn btn-secondary mt-3 ms-2">Back to Home Page</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

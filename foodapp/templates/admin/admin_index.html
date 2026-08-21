@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>RecipeHub - Admin Dashboard</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <!-- Favicon -->
+    <link href="/static/img/favicon.ico" rel="icon">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- CSS -->
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/style.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<!-- ================= TOP HEADER ================= -->
+<div class="container-fluid px-0 d-none d-lg-block">
+    <div class="row gx-0">
+        <div class="col-lg-4 bg-secondary py-3"></div>
+
+        <div class="col-lg-4 text-center bg-primary border-inner py-3">
+            <a href="{% url 'admin_index' %}" class="navbar-brand">
+                <h1 class="m-0 text-uppercase text-white">
+                    <i class="fas fa-user-shield text-dark me-3"></i>RecipeHub
+                </h1>
+            </a>
+        </div>
+
+        <div class="col-lg-4 bg-secondary py-3"></div>
+    </div>
+</div>
+
+<!-- ================= NAVBAR ================= -->
+<nav class="navbar navbar-expand-lg bg-dark navbar-dark shadow-sm py-3">
+    <div class="container">
+        <a href="{% url 'admin_index' %}" class="navbar-brand d-lg-none">
+            RecipeHub
+        </a>
+
+        <button class="navbar-toggler" type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto">
+
+                <a href="{% url 'admin_index' %}" class="nav-item nav-link active">Home</a>
+                <a href="{% url 'admin_view_about' %}" class="nav-item nav-link">About</a>
+                <a href="{% url 'admin_all_user_recipes' %}" class="nav-item nav-link">User Recipes</a>
+
+                <a href="{% url 'notifications' %}" class="nav-item nav-link">
+                    Notifications
+                    {% if unread_count > 0 %}
+                        <span class="badge bg-danger">{{ unread_count }}</span>
+                    {% endif %}
+                </a>
+
+                <a href="{% url 'user_feedback' %}" class="nav-item nav-link">Feedback</a>
+                <a href="{% url 'logout' %}" class="nav-item nav-link text-danger">Logout</a>
+
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- ================= MESSAGES (FIXED) ================= -->
+{% if messages %}
+    <div class="container mt-3">
+        {% for message in messages %}
+            <!-- <div class="alert alert-{{ message.tags }} alert-dismissible fade show"> -->
+                <!-- {{ message }} -->
+                <!-- <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert">
+                </button> -->
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+{% block content %}
+
+<!-- ================= ADMIN DASHBOARD ================= -->
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <h4 class="text-primary">Admin Control Panel</h4>
+        <h1 class="display-5">Manage RecipeHub System</h1>
+    </div>
+
+    <div class="row g-4">
+
+        <!-- Manage Categories -->
+        <div class="col-md-6">
+            <div class="card shadow-lg text-center p-4 h-100">
+                <i class="bi bi-tags display-4 text-primary mb-3"></i>
+                <h5>Manage Categories</h5>
+                <p>Create and update recipe categories.</p>
+                <a href="{% url 'add_category' %}" class="btn btn-primary mt-auto">Manage Categories</a>
+            </div>
+        </div>
+
+        <!-- Add Recipes -->
+        <div class="col-md-6">
+            <div class="card shadow-lg text-center p-4 h-100">
+                <i class="bi bi-plus-circle display-4 text-success mb-3"></i>
+                <h5>Add Recipe</h5>
+                <p>Upload recipes under specific categories.</p>
+                <a href="{% url 'add_recipe' %}" class="btn btn-success mt-auto">Add Recipe</a>
+            </div>
+        </div>
+
+        <!-- Manage Recipes -->
+        <div class="col-md-6">
+            <div class="card shadow-lg text-center p-4 h-100">
+                <i class="bi bi-pencil-square display-4 text-warning mb-3"></i>
+                <h5>Manage Recipes</h5>
+                <p>Edit or delete existing recipes.</p>
+                <a href="{% url 'view_recipe' %}" class="btn btn-warning mt-auto">Manage Recipes</a>
+            </div>
+        </div>
+
+        <!-- Manage Users -->
+        <div class="col-md-6">
+            <div class="card shadow-lg text-center p-4 h-100">
+                <i class="bi bi-people display-4 text-info mb-3"></i>
+                <h5>User Management</h5>
+                <p>View and manage registered users.</p>
+                <a href="{% url 'admin_view_users' %}" class="btn btn-info mt-auto">View Users</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}
+
+<!-- ================= FOOTER ================= -->
+<div class="container-fluid bg-dark text-light py-4 mt-5">
+    <div class="container text-center">
+        <h5>RecipeHub Admin Panel</h5>
+        <small>© 2026 RecipeHub. All Rights Reserved.</small>
+    </div>
+</div>
+
+<!-- ================= JS ================= -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

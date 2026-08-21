@@ -1,0 +1,120 @@
+{% extends "admin/admin_index.html" %}
+{% block content %}
+
+<div class="container mt-5">
+
+    <h2 class="mb-4">Manage Recipe Categories</h2>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <!-- ADD CATEGORY FORM -->
+    <div class="card mb-4 shadow-sm">
+        <div class="card-body">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="input-group">
+                    <input type="text"
+                           name="name"
+                           class="form-control"
+                           placeholder="Enter new category"
+                           required>
+
+                    <button type="submit"
+                            name="add_category"
+                            class="btn btn-primary">
+                        Add Category
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- CATEGORY LIST -->
+    <ul class="list-group shadow-sm">
+        {% for category in categories %}
+        <li class="list-group-item">
+
+            <div class="d-flex justify-content-between align-items-center">
+
+                <!-- CATEGORY NAME -->
+                <span id="name-{{ category.id }}">
+                    {{ category.name }}
+                </span>
+
+                <div>
+                    <button class="btn btn-sm btn-warning me-2"
+                            onclick="enableEdit('{{ category.id }}')">
+                        Edit
+                    </button>
+
+                    <form method="POST" style="display:inline;">
+                        {% csrf_token %}
+                        <input type="hidden" name="cat_id" value="{{ category.id }}">
+                        <button type="submit"
+                                name="delete_category"
+                                class="btn btn-sm btn-danger"
+                                onclick="return confirm('Are you sure?')">
+                            Delete
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- EDIT FORM (HIDDEN) -->
+            <form method="POST"
+                  id="edit-form-{{ category.id }}"
+                  class="mt-2 d-none">
+
+                {% csrf_token %}
+                <input type="hidden" name="cat_id" value="{{ category.id }}">
+
+                <div class="input-group">
+                    <input type="text"
+                           name="new_name"
+                           value="{{ category.name }}"
+                           class="form-control"
+                           required>
+
+                    <button type="submit"
+                            name="edit_category"
+                            class="btn btn-success">
+                        Save
+                    </button>
+
+                    <button type="button"
+                            class="btn btn-secondary"
+                            onclick="cancelEdit('{{ category.id }}')">
+                        Cancel
+                    </button>
+                </div>
+            </form>
+
+        </li>
+        {% empty %}
+        <li class="list-group-item text-center">
+            No categories added yet.
+        </li>
+        {% endfor %}
+    </ul>
+
+</div>
+
+<script>
+function enableEdit(id) {
+    document.getElementById("name-" + id).style.display = "none";
+    document.getElementById("edit-form-" + id).classList.remove("d-none");
+}
+
+function cancelEdit(id) {
+    document.getElementById("name-" + id).style.display = "inline";
+    document.getElementById("edit-form-" + id).classList.add("d-none");
+}
+</script>
+
+{% endblock %}

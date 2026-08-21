@@ -1,0 +1,113 @@
+{% extends "admin/admin_index.html" %}
+{% block content %}
+
+<div class="container py-5">
+
+    <!-- HEADER -->
+    <div class="text-center mb-5">
+        <h1 class="fw-bold text-danger">🍽️ About RecipeHub</h1>
+        <p class="lead text-muted">
+            A community-driven platform where food lovers share, discover and connect through recipes.
+        </p>
+    </div>
+
+    <!-- INTRO SECTION -->
+    <div class="row align-items-center mb-5">
+        <div class="col-md-6">
+            <h3 class="fw-bold">What is RecipeHub?</h3>
+            <p>
+                <strong>RecipeHub</strong> is an interactive recipe sharing platform that allows 
+                users and administrators to create, explore, like, and comment on delicious recipes.
+            </p>
+            <p>
+                Whether you're a home cook or a food enthusiast, RecipeHub makes discovering 
+                and sharing recipes simple, engaging, and fun.
+            </p>
+        </div>
+
+        <div class="col-md-6 text-center">
+            <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061"
+                 class="img-fluid rounded shadow"
+                 alt="Cooking Image">
+        </div>
+    </div>
+
+    <hr class="my-5">
+
+    <!-- FEATURES SECTION -->
+    <div class="text-center mb-4">
+        <h2 class="fw-bold">✨ Key Features</h2>
+    </div>
+
+    <div class="row text-center">
+
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm h-100 p-3">
+                <h4>👩‍🍳 User Recipes</h4>
+                <p>
+                    Users can upload their own recipes with images, videos,
+                    ingredients, and step-by-step instructions.
+                </p>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm h-100 p-3">
+                <h4>❤️ Likes & Comments</h4>
+                <p>
+                    Engage with recipes by liking them and sharing your thoughts
+                    through comments.
+                </p>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm h-100 p-3">
+                <h4>🔍 Smart Search</h4>
+                <p>
+                    Easily search recipes by name or filter them by categories
+                    to find exactly what you're craving.
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    <hr class="my-5">
+
+    <!-- ADMIN SECTION -->
+    <div class="row align-items-center mb-5">
+
+        <div class="col-md-6 order-md-2">
+            <h3 class="fw-bold">🛠️ Admin Management</h3>
+            <p>
+                Administrators can add official recipes, manage categories,
+                and monitor user interactions such as likes and comments.
+            </p>
+            <p>
+                This ensures quality control and smooth platform management.
+            </p>
+        </div>
+
+        <div class="col-md-6 order-md-1 text-center">
+            <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836"
+                 class="img-fluid rounded shadow"
+                 alt="Recipe Image">
+        </div>
+
+    </div>
+
+    <hr class="my-5">
+
+    <!-- VISION SECTION -->
+    <div class="text-center">
+        <h2 class="fw-bold text-danger">🎯 Our Vision</h2>
+        <p class="lead mt-3">
+            To build a vibrant cooking community where recipes are not just shared —
+            they are experienced, appreciated, and celebrated.
+        </p>
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,86 @@
+{% extends 'index.html' %}
+{% block content %}
+<style>
+    #togglePassword:hover,
+    #togglePassword:focus {
+        background-color: transparent !important;
+        box-shadow: none !important;
+        border-color: #ced4da !important;
+    }
+</style>
+<div class="container-fluid bg-light pt-5">
+    <div class="container py-5">
+        <div class="d-flex flex-column text-center mb-5">
+            <h4 class="text-primary mb-3">Login</h4>
+            <h1 class="display-4 m-0"><span class="text-primary">Access</span> Your Account</h1>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                {% if messages %}
+                <div class="alert alert-info">
+                    {% for message in messages %}
+                    {{ message }}
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                <div class="card shadow-lg">
+                    <div class="card-body p-4">
+                        <form method="post">
+                            {% csrf_token %}
+
+                            <div class="mb-3">
+                                <label class="form-label">Email</label>
+                                <input type="email" name="email" class="form-control" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Password</label>
+                                <div class="input-group">
+                                    <input type="password" name="password" id="password" class="form-control" required>
+
+                                    <button type="button" class="btn border-0 bg-transparent" id="togglePassword"
+                                        title="Show Password">
+                                        <i class="bi bi-eye" id="toggleIcon"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+
+
+
+                            <button type="submit" class="btn btn-primary w-100">Login</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="text-center mt-3">
+                    <p>Don't have an account? <a href="{% url 'register' %}">Register Here</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const toggleBtn = document.getElementById("togglePassword");
+        const passwordField = document.getElementById("password");
+        const icon = document.getElementById("toggleIcon");
+
+        toggleBtn.addEventListener("click", function () {
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                icon.classList.remove("bi-eye");
+                icon.classList.add("bi-eye-slash");
+            } else {
+                passwordField.type = "password";
+                icon.classList.remove("bi-eye-slash");
+                icon.classList.add("bi-eye");
+            }
+        });
+    });
+</script>
+
+
+{% endblock %}

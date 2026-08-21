@@ -1,0 +1,82 @@
+{% extends 'admin/admin_index.html' %}
+{% block content %}
+
+<div class="container mt-4">
+    <h2 class="mb-4">Add New Recipe</h2>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="card shadow-sm p-4">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <!-- Category -->
+            <div class="mb-3">
+                <label class="form-label">Category</label>
+                <select name="category" class="form-control" required>
+                    <option value="">-- Select Category --</option>
+                    {% for category in categories %}
+                        <option value="{{ category.id }}">
+                            {{ category.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Name -->
+            <div class="mb-3">
+                <label class="form-label">Recipe Name</label>
+                <input type="text" name="name" class="form-control" required>
+            </div>
+
+            <!-- Description -->
+            <div class="mb-3">
+                <label class="form-label">Description</label>
+                <textarea name="description" class="form-control" rows="3" required></textarea>
+            </div>
+
+            <!-- Ingredients -->
+            <div class="mb-3">
+                <label class="form-label">Ingredients (one per line)</label>
+                <textarea name="ingredients" class="form-control" rows="4" required></textarea>
+            </div>
+
+            <!-- Instructions -->
+            <div class="mb-3">
+                <label class="form-label">Instructions (one step per line)</label>
+                <textarea name="instructions" class="form-control" rows="4" required></textarea>
+            </div>
+
+            <!-- Main Image -->
+            <div class="mb-3">
+                <label class="form-label">Main Image</label>
+                <input type="file" name="image" class="form-control" accept="image/*">
+            </div>
+
+            <!-- Multiple Images -->
+            <div class="mb-3">
+                <label class="form-label">Gallery Images</label>
+                <input type="file" name="multiple_images" class="form-control" multiple accept="image/*">
+            </div>
+
+            <!-- Video -->
+            <div class="mb-3">
+                <label class="form-label">Recipe Video</label>
+                <input type="file" name="video" class="form-control" accept="video/*">
+            </div>
+
+            <button type="submit" class="btn btn-success w-100">
+                Add Recipe
+            </button>
+
+        </form>
+    </div>
+</div>
+
+{% endblock %}
